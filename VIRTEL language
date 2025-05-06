@@ -1,0 +1,28 @@
+Hello, VIRTEL
+print "Hello, World!";
+
+Data Types
+  boolean: true, false
+  double: number
+  string: ""
+  char: ''
+
+Unary Operators (only one operand)
+  -a → unary minus
+  ~a → bitwise NOT
+
+Binary Operators
+(High Precedence)
+  a * b → multiplication
+  a / b → division
+  a % b → modulo
+
+(Low Precedence)
+  a + b → addition
+  a - b → subtraction
+
+Control flow
+  if ... {} elseif ... {} else {}
+  for _; _; _; {} while ... {}
+
+
