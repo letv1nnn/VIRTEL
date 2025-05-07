@@ -9,6 +9,11 @@
 typedef enum {
 	OP_CONSTANT,
 	OP_RETURN,
+	OP_ADD,
+	OP_MUL,
+	OP_DIV,
+	OP_SUB,
+	OP_NEG,
 } OpCode;
 
 //structure for "Run-length encoding for line information" strategy
