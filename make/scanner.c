@@ -22,15 +22,15 @@ static Token createToken(TokenType type) {
     Token token;
     token.line = scanner.line;
     token.type = type;
-    token.start = scanner.current;
+    token.start = scanner.start;
     token.length = (int)(scanner.current - scanner.start);
     return token;
 }
 
 static Token createErrorToken(const char *message) {
     Token token;
-    token.line = scanner.line;
     token.type = TOKEN_ERROR;
+    token.line = scanner.line;
     token.start = message;
     token.line = scanner.line;
     token.length = (int)strlen(message);
@@ -175,7 +175,7 @@ Token scanToken() {
         case '=': return createToken(match('=') ? TOKEN_EQUAL_EQUAL : TOKEN_EQUAL);
         case '<': return createToken(match('=') ? TOKEN_LESS_EQUAL : TOKEN_LESS);
         case '>': return createToken(match('=') ? TOKEN_GREATER_EQUAL : TOKEN_GREATER);
-        case '"': string();
+        case '"': return string();
     }
 
     return createErrorToken("Unexpected token.");
