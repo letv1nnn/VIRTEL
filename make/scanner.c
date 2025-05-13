@@ -123,6 +123,7 @@ static TokenType identifierType() {
             if (scanner.current - scanner.start > 1) {
                 switch (scanner.start[1]) {
                     case 'a': return keyword(2, 3, "lse", TOKEN_FALSE);
+                    case 'u': return keyword(2, 1, "n", TOKEN_FUN);
                     case 'o': return keyword(2, 1, "r", TOKEN_FOR);
                 }
             }
