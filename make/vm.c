@@ -1,4 +1,5 @@
 #include "vm.h"
+#include "compiler.h"
 
 #define READ_BYTE() (*vm.ip++)
 
@@ -66,10 +67,9 @@ static InterpretResult run() {
     }
 }
 
-InterpretResult interpret(Chunk* chunk) {
-  vm.chunk = chunk;
-  vm.ip = vm.chunk->instructions;
-  return run();
+InterpretResult interpret(const char *source) {
+    compile(source);
+    return INTERPRET_OK;
 }
 
 
