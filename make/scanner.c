@@ -64,10 +64,11 @@ static void skip() {
                 advance();break;
             case '/':
                 if (peekNext() == '/') {
-                    while (c != '\n' && c != '\0') advance();
+                    while (*scanner.current != '\n' && *scanner.current != '\0') advance();
                 } else {
                     return;
                 }
+                break;
             default: return;
         }
     }
