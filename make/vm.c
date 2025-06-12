@@ -22,11 +22,11 @@ void freeVM() {
 }
 
 static InterpretResult run() {
-#if 1 // chunk testing purposes
+#if 0 // chunk testing purposes
     testChunk(vm.chunk);
 #endif
     for (;;) {
-#if 1 // stack testing purposes
+#if 0 // stack testing purposes
         for (Value *slot = vm.stack; slot < vm.stackTop; slot++) {
             printf(" [ ");
             printf("%lf", *slot);
@@ -68,8 +68,20 @@ static InterpretResult run() {
 }
 
 InterpretResult interpret(const char *source) {
-    compile(source);
-    return INTERPRET_OK;
+    Chunk chunk;
+    createChunk(&chunk);
+
+    if (!compile(source, &chunk)) {
+        freeChunk(&chunk);
+        return INTERPRET_COMPILE_ERROR;
+    }
+    vm.chunk = &chunk;
+    vm.ip = vm.chunk->instructions;
+
+    InterpretResult = run();
+
+    freeChunk(&chunk);
+    return result;
 }
 
 
