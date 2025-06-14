@@ -6,21 +6,11 @@
 ## *Main Phases*
 
 1. Source code
-       |
-       V
 2.  Scanner
-       |
-       V
 3.   Tokens
-       |
-       V
 4.  Compiler
-       |
-       V
 5.  Bytecode
      chunk
-       |
-       V
 6.  Virtual
     machine
 
