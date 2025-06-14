@@ -21,6 +21,7 @@
 - garbage collection(mark-and-sweep)
 - hash table
 - own memory allocators
+- RLE (run-length encoding)
 - ...
 
 ---
