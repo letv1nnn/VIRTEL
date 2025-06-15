@@ -4,7 +4,7 @@
 ---
 
 ## *Main Phases*
-
+```plaintext
 1. Source code
        |
        V
@@ -23,7 +23,7 @@
        V
 6.  Virtual
     machine
-
+```
 ---
 
 ## *Concepts I want to implement*
