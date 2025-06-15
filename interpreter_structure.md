@@ -65,9 +65,11 @@
 ### Virtual Machine
 The virtual machine will take a chunk of bytecode and execute instructions.
 
-1. 42 + 3.141592  =>  (45.141592)
-2. 123 / 90.909 * 45.141592  => (1448.638829)
-3. -1448.638829  => (-1448.638829)
+```plaintext
+line num
+    1     42 + 3.141592  =>  (45.141592)
+    2     123 / 90.909 * 45.141592  => (1448.638829)
+    3     -1448.638829  => (-1448.638829)
 
 Stack (top at 0x580f25af0050):
 Stack (top at 0x580f25af0058): [ 42.000000 ]
@@ -78,5 +80,6 @@ Stack (top at 0x580f25af0068): [ 45.141592 ] [ 123.000000 ] [ 90.909000 ]
 Stack (top at 0x580f25af0060): [ 45.141592 ] [ 32.091000 ]
 Stack (top at 0x580f25af0058): [ 1448.638829 ]
 Stack (top at 0x580f25af0058): [ -1448.638829 ]
+```
 
 
