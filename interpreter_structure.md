@@ -62,7 +62,7 @@
 
 ---
 
-### Virtual Machine
+### *Virtual Machine*
 The virtual machine will take a chunk of bytecode and execute instructions.
 
 ```plaintext
