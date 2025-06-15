@@ -37,25 +37,31 @@
 
 ## *Path*
 
-##### *Sequence of bytecode*
-- buffer of instructions
-- handle constants, how and where to store them
-             opcode
-            constant index
-    [0x1234, 0x1235, 0x1236, ...]
-                       \|
-                       \|
-             ==========\|
-            \|
-             V
-    [123, 3,141592, ...]]
+### *Sequence of bytecode*
+- **Buffer of instructions**
+- **Handle constants** (storage approach):
+  ```plaintext
+  opcode
+  constant index
+  [0x1234, 0x1235, 0x1236, ...]
+             \|
+             \|
+    ==========\|
+             \|
+              V
+  [123, 3.141592, ...]
+  ```
 
-- implement run-length encoding to store a line information
-    1 - line       2 - line
-    3 - num of     1 - num of
-      continues     continues
-        bytes         bytes
-    [ ( 1, 3 ) ,  ( 2, 1 ) ]
+- **Run-length encoding for line info**:
+  ```plaintext
+  1 - line       2 - line
+  3 - num of     1 - num of
+    continues     continues
+      bytes         bytes
+  [ (1, 3), (2, 1) ]
+  ```
 
-##### *Virtual Machine*
-- virtual machine gonna take a chunk of bytecode and execute instructions
+---
+
+### Virtual Machine
+The virtual machine will take a chunk of bytecode and execute instructions.
