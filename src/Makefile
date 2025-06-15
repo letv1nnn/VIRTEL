@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET = virtel
-SOURCES = main.c chunk.c debug.c malloc.c
+SOURCES = main.c chunk.c debug.c malloc.c vm.c
 
 all: $(TARGET)
 

@@ -1,6 +1,14 @@
 #include "debug.h"
 
 
+void vmStack(VM *vm) {
+    printf("Stack (top at %p): ", (void*)vm->stack_top);
+    for (double *slot = vm->stack; slot < vm->stack_top; slot++) {
+        printf("[ %f ] ", *slot);
+    }
+    printf("\n");
+}
+
 void decodeChunk(Chunk *chunk) {
     for (int i = 0; i < chunk->curr;) {
         uint8_t opcode = chunk->opcodes[i];
