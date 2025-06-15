@@ -41,14 +41,13 @@
 - **Buffer of instructions**
 - **Handle constants** (storage approach):
   ```plaintext
-  opcode
-  constant index
+            opcode
+           constant index
   [0x1234, 0x1235, 0x1236, ...]
-             \|
-             \|
-    ==========\|
-             \|
-              V
+                     |
+             |=======|
+             |
+             V
   [123, 3.141592, ...]
   ```
 
