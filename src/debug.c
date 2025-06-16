@@ -22,6 +22,18 @@ void decodeChunk(Chunk *chunk) {
                 printf("%04d - OP_RETURN - <line %d>\n", chunk->opcodes[i], getLine(chunk, i));
                 i++;
                 break;
+            case OP_ADD: case OP_SUB:
+            case OP_MUL: case OP_DIV:
+            case OP_NEG:
+                char *type;
+                if (opcode == OP_ADD) type = "OP_ADD";
+                else if (opcode == OP_SUB) type = "OP_SUB";
+                else if (opcode == OP_MUL) type = "OP_MUL";
+                else if (opcode == OP_NEG) type = "OP_NEG";
+                else type = "OP_DIV";
+                printf("%04d - %s - <line %d>\n", chunk->opcodes[i], type, getLine(chunk, i));
+                i++;
+                break;
             default:
                 printf("Unknown opcode\n");
                 i++;
