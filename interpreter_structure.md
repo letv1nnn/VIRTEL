@@ -37,7 +37,7 @@
 
 ## *Path*
 
-### *Sequence of bytecode* 6/14/2025
+### *Sequence of bytecode* 14/6/2025
 - **Buffer of instructions**
 - **Handle constants** (storage approach):
   ```plaintext
@@ -62,7 +62,7 @@
 
 ---
 
-### *Virtual Machine* 6/15/2025
+### *Virtual Machine* 15/6/2025
 The virtual machine will take a chunk of bytecode and execute instructions.
 
 ```plaintext
