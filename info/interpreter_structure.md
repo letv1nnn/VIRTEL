@@ -82,4 +82,34 @@ Stack (top at 0x580f25af0058): [ 1448.638829 ]
 Stack (top at 0x580f25af0058): [ -1448.638829 ]
 ```
 
+### *Scanner* 16/6/2025
+this time want to try Rust for the first time (3 days of grinding)
+
+1. stage, handled everything, except the keywords, and do not know what to do with the variables yet.
+    ```plaintext
+    Token { token_type: Noth, lexeme: "v", line: 1 }
+    Token { token_type: Noth, lexeme: "a", line: 1 }
+    Token { token_type: Noth, lexeme: "r", line: 1 }
+    Token { token_type: Noth, lexeme: "x", line: 1 }
+    Token { token_type: Equal, lexeme: "=", line: 1 }
+    Token { token_type: Number, lexeme: "5", line: 1 }
+    ```
+2.  gonna use a hashmap for this purpose, I'll store the key = "identifier as a string"
+    and value as a token type.
+    ```plaintext
+    Token { token_type: Var, lexeme: "var", line: 1 }
+    Token { token_type: Identifier, lexeme: "x", line: 1 }
+    Token { token_type: Equal, lexeme: "=", line: 1 }
+    Token { token_type: Number, lexeme: "5", line: 1 }
+    Token { token_type: Semicolon, lexeme: ";", line: 1 }
+    Token { token_type: Identifier, lexeme: "is_equal", line: 2 }
+    Token { token_type: Equal, lexeme: "=", line: 2 }
+    Token { token_type: Identifier, lexeme: "x", line: 2 }
+    Token { token_type: Plus, lexeme: "+", line: 2 }
+    Token { token_type: Number, lexeme: "10", line: 2 }
+    Token { token_type: EqualEqual, lexeme: "==", line: 2 }
+    Token { token_type: Number, lexeme: "15", line: 2 }
+    ```
+
+
 
