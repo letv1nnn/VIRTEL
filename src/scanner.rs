@@ -1,28 +1,27 @@
 
 use std::collections::HashMap;
 
+
+#[derive(Clone)]
+#[derive(Debug, PartialEq)]
 pub enum TokenType {
     LeftParen, RightParen,
     LeftBrace, RightBrace,
     Comma, Minus, Plus,
     Semicolon, Slash, Star,
-
     Bang, BangEqual,
     Equal, EqualEqual,
     Greater, GreaterEqual,
     Less, LessEqual,
-
     Identifier, Str, Number,
-
     And, Else, False,
     Fun, If, Noth, For,
     Print, Return, Or,
-    Var, While, True
-
+    Var, While, True,
     Error, Eof
 }
 
-
+#[derive(Debug)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
@@ -48,7 +47,7 @@ impl Scanner {
         keywords.insert("or".to_string(), TokenType::Or);
         keywords.insert("true".to_string(), TokenType::True);
         keywords.insert("false".to_string(), TokenType::False);
-        keywords.insert("noth".to_string(), TokenType::Nil);
+        keywords.insert("noth".to_string(), TokenType::Noth);
         keywords.insert("fun".to_string(), TokenType::Fun);
         keywords.insert("var".to_string(), TokenType::Var);
         keywords.insert("print".to_string(), TokenType::Print);
@@ -64,10 +63,10 @@ impl Scanner {
     }
 
     pub fn scan_token(&mut self) -> Token {
-        self.skip_whitspace();
+        self.skip_whitespace();
         self.start = self.current;
 
-        if is_at_end() {
+        if self.is_at_end() {
             self.make_token(TokenType::Eof);
         }
 
@@ -82,50 +81,54 @@ impl Scanner {
             ')' => self.make_token(TokenType::RightParen),
             '{' => self.make_token(TokenType::LeftBrace),
             '}' => self.make_token(TokenType::RightBrace),
-            ',' => self.make_token(TokenType::Comma).
+            ',' => self.make_token(TokenType::Comma),
             ';' => self.make_token(TokenType::Semicolon),
+            '"' => self.string(),
+            c if c.is_ascii_digit() => self.numbers(),
+            c if c.is_ascii_alphabetic() => self.identifier(),
 
             // need to handle tokens with length more than one like < or <=, etc.
             '=' => {
                 let exp = self.match_char('=');
                 match exp {
-                    true: self.make_token(TokenType::EqualEqual),
-                    false: self.make_token(TokenType::Equal),
+                    true => self.make_token(TokenType::EqualEqual),
+                    false => self.make_token(TokenType::Equal),
                 }
             },
             '!' => {
                 let exp = self.match_char('=');
                 match exp {
-                    true: self.make_token(TokenType::BangEqual),
-                    false: self.make_token(TokenType::Bang),
+                    true => self.make_token(TokenType::BangEqual),
+                    false => self.make_token(TokenType::Bang),
                 }
             },
             '<' => {
                 let exp = self.match_char('=');
                 match exp {
-                    true: self.make_token(TokenType::LessEqual),
-                    false: self.make_token(TokenType::Less),
+                    true => self.make_token(TokenType::LessEqual),
+                    false => self.make_token(TokenType::Less),
                 }
             },
             '>' => {
                 let exp = self.match_char('=');
                 match exp {
-                    true: self.make_token(TokenType::GreaterEqual),
-                    false: self.make_token(TokenType::Greater),
+                    true => self.make_token(TokenType::GreaterEqual),
+                    false => self.make_token(TokenType::Greater),
                 }
             }
 
-            _ => self.make_token(TokenType::Eof),
+            _ => self.make_token(TokenType::Error),
         }
     }
 
     fn is_at_end(&self) -> bool {
-        return self.current >= self.source.len();
+        self.current >= self.source.len()
     }
 
     fn advance(&mut self) -> char {
+        let c = self.source.chars().nth(self.current).unwrap();
         self.current += 1;
-        self.source.chars().nth(self.current - 1).unwrap()
+        c
     }
 
     fn match_char(&mut self, expected: char) -> bool {
@@ -139,38 +142,108 @@ impl Scanner {
         true
     }
 
+    fn string(&mut self) -> Token {
+        while let Some(c) = self.source.chars().nth(self.current) {
+            if c == '"' {
+                self.advance();
+                return self.make_token(TokenType::Str);
+            }
+            if c == '\n' {
+                self.line += 1;
+            }
+            self.advance();
+        }
+
+        self.make_token(TokenType::Error)
+    }
+
+    fn numbers(&mut self) -> Token {
+        while let Some(c) = self.source.chars().nth(self.current) {
+            if !c.is_ascii_digit() {
+                break;
+            }
+            self.advance();
+        }
+        // Look for fractional part
+        if let Some('.') = self.source.chars().nth(self.current) {
+            if let Some(c) = self.source.chars().nth(self.current + 1) {
+                if c.is_ascii_digit() {
+                    self.advance();
+                    while let Some(c) = self.source.chars().nth(self.current) {
+                        if !c.is_ascii_digit() {
+                            break;
+                        }
+                        self.advance();
+                    }
+                }
+            }
+        }
+        self.make_token(TokenType::Number)
+    }
+
+    // need to  also handle the keywords recognition, like for/false or the variable
+    fn identifier(&mut self) -> Token {
+        while let Some(c) = self.source.chars().nth(self.current) {
+            if !c.is_ascii_alphabetic() && c != '_' {
+                break;
+            }
+            self.advance();
+        }
+        let text = &self.source[self.start..self.current];
+        match self.keywords.get(text) {
+            Some(token_type) => self.make_token(token_type.clone()),
+            None => self.make_token(TokenType::Identifier),
+        }
+    }
+
     fn skip_whitespace(&mut self) {
         loop {
             let curr = self.source.chars().nth(self.current);
             match curr {
-                ' ' => self.advance(),
-                '\t' | '\r' => self.advance(),
-                '\n' => {
-                    self.advance();
+                Some(' ') => self.advance(),
+                Some('\t') | Some('\r') => self.advance(),
+                Some('\n') => {
                     self.line += 1;
+                    self.advance()
                 },
-                '/' => {
-                    let is_comment = self.match('/');
-                    match is_comment {
-                        true => {
-                            while self.source.chars().nth(self.current) != '\n' || !self.is_at_end() {
-                                self.advance();
+                Some('/') => {
+                    if let Some('/') = self.source.chars().nth(self.current + 1) {
+                        // A comment goes until the end of the line
+                        while let Some(c) = self.source.chars().nth(self.current) {
+                            if c == '\n' {
+                                break;
                             }
-                        },
-                        false => return;
+                            self.advance();
+                        } return
+                    } else {
+                        break;
                     }
                 },
-                '_' => return,
-            }
+                _ => return,
+            };
         }
     }
-
+    // returns a token with a specific type and
+    // start____current slice of the string code
     fn make_token(&self, token_type: TokenType) -> Token {
         let lexeme = self.source[self.start..self.current].to_string();
         Token {
             token_type,
             lexeme,
             line: self.line,
+        }
+    }
+}
+
+// temprorary testing
+fn main() {
+    let source = "var x = 5;\nis_equal = x + 10 == 15\n".to_string();
+    let mut scanner = Scanner::new(source);
+    loop {
+        let token = scanner.scan_token();
+        println!("{:?}", token);
+        if token.token_type == TokenType::Eof {
+            break;
         }
     }
 }
