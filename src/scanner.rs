@@ -237,7 +237,9 @@ impl Scanner {
 
 // temprorary testing
 fn main() {
-    let source = "var x = 5;\nis_equal = x + 10 == 15\n".to_string();
+    let mut source = String::from("");
+    std::io::stdin().read_line(&mut source).expect("Failed to read the line!");
+
     let mut scanner = Scanner::new(source);
     loop {
         let token = scanner.scan_token();
