@@ -8,6 +8,7 @@ pub enum TokenType {
     LeftParen, RightParen,
     LeftBrace, RightBrace,
     Comma, Minus, Plus,
+    RightShift, LeftShift,
     Semicolon, Slash, Star,
     Bang, BangEqual,
     Equal, EqualEqual,
@@ -103,17 +104,22 @@ impl Scanner {
                 }
             },
             '<' => {
-                let exp = self.match_char('=');
+                // introducing left shifting here
+                let exp = self.source.chars().nth(self.current).unwrap();
+                self.current += 1;
                 match exp {
-                    true => self.make_token(TokenType::LessEqual),
-                    false => self.make_token(TokenType::Less),
+                    '=' => self.make_token(TokenType::LessEqual),
+                    '<' => self.make_token(TokenType::LeftShift),
+                    _ => self.make_token(TokenType::Less),
                 }
             },
             '>' => {
-                let exp = self.match_char('=');
+                let exp = self.source.chars().nth(self.current).unwrap();
+                self.current += 1;
                 match exp {
-                    true => self.make_token(TokenType::GreaterEqual),
-                    false => self.make_token(TokenType::Greater),
+                    '=' => self.make_token(TokenType::GreaterEqual),
+                    '>' => self.make_token(TokenType::RightShift),
+                    _ => self.make_token(TokenType::Greater),
                 }
             }
 
@@ -148,6 +154,14 @@ impl Scanner {
                 self.advance();
                 return self.make_token(TokenType::Str);
             }
+            if c == '$' {
+                if self.match_char('{') {
+                    self.identifier();
+                }
+                if self.advance() != '}' {
+                    return self.make_token(TokenType::Error);
+                }
+            }
             if c == '\n' {
                 self.line += 1;
             }
@@ -171,7 +185,7 @@ impl Scanner {
                     self.advance();
                     while let Some(c) = self.source.chars().nth(self.current) {
                         if !c.is_ascii_digit() {
-                            break;
+                           break;
                         }
                         self.advance();
                     }
