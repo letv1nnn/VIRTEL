@@ -23,6 +23,7 @@
 ### *Binary operators*
 - [+ - * / ]
 - [> < >= <= == !=]
+- [<< >>]
 
 
 ## *Control Flow*
