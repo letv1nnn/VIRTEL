@@ -82,7 +82,7 @@ Stack (top at 0x580f25af0058): [ 1448.638829 ]
 Stack (top at 0x580f25af0058): [ -1448.638829 ]
 ```
 
-### *Scanner* 16/6/2025
+### *Scanner* 16/6/2025 - 19/6/2025
 this time want to try Rust for the first time (3 days of grinding)
 
 1. stage, handled everything, except the keywords, and do not know what to do with the variables yet.
@@ -111,5 +111,39 @@ this time want to try Rust for the first time (3 days of grinding)
     Token { token_type: Number, lexeme: "15", line: 2 }
     ```
 
+3.  need to take a file or a one line coding and transfer it to my Rust scanner and then return Rust's tokens to my future compiler.
+    So initially need to connect my rust file with main C file.
+
+I've created two scanners one in C and one int Rust, but could not connect my rust interpreter to the main program so had to rewrite my whole scanner using C lang.
+
+```plaintext
+> for (var i = 0; i < 10; i = i + 1) print(i);
+   1 25 'for'
+   |  0 '('
+   | 33 'var'
+   | 19 'i'
+   | 13 '='
+   | 21 '0'
+   |  8 ';'
+   | 19 'i'
+   | 17 '<'
+   | 21 '10'
+   |  8 ';'
+   | 19 'i'
+   | 13 '='
+   | 19 'i'
+   |  7 '+'
+   | 21 '1'
+   |  1 ')'
+   | 30 'print'
+   |  0 '('
+   | 19 'i'
+   |  1 ')'
+   |  8 ';'
+   2 36 ''
+
+```
+
+*Consequence:* both of these scanners perform the same function, but scanner written in C uses another approach to detect the keyword, "trie", I've found this approach in the book "Crafting Interpreters".
 
 
