@@ -1,5 +1,5 @@
-#include "vm.h"
-#include "debug.h"
+#include "include/vm.h"
+#include "include/debug.h"
 
 VM vm;
 
@@ -34,10 +34,13 @@ double pop() {
     return *vm.stack_top;
 }
 
-InterpretResult interpret(Chunk *chunk) {
-    vm.chunk = chunk;
-    vm.ip = vm.chunk->opcodes;
-    return run();
+InterpretResult interpret(const char * source) {
+    compile(source);
+    return OK;
+
+    //vm.chunk = chunk;
+    //vm.ip = vm.chunk->opcodes;
+    //return run();
 }
 
 InterpretResult run() {

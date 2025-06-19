@@ -1,4 +1,4 @@
-#include "debug.h"
+#include "include/debug.h"
 
 
 void vmStack(VM *vm) {
@@ -10,7 +10,7 @@ void vmStack(VM *vm) {
 }
 
 void decodeChunk(Chunk *chunk) {
-    for (int i = 0; i < chunk->curr;) {
+    for (size_t i = 0; i < chunk->curr;) {
         uint8_t opcode = chunk->opcodes[i];
         switch (opcode) {
             case (OP_CONSTANT):
