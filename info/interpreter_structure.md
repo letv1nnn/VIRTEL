@@ -147,7 +147,7 @@ I've created two scanners one in C and one int Rust, but could not connect my ru
 *Consequence:* both of these scanners perform the same function, but scanner written in C uses another approach to detect the keyword, "trie", I've found this approach in the book "Crafting Interpreters".
 
 
-## *Parser - AST - Code Generator* 20/6/2025 - ...
+### *Parser - AST - Code Generator* 20/6/2025 - ...
     for instance we have an expression 1 + 2 * -3
     - after Scanning it we get:
 ```plaintext
