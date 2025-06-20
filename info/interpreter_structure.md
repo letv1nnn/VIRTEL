@@ -147,3 +147,45 @@ I've created two scanners one in C and one int Rust, but could not connect my ru
 *Consequence:* both of these scanners perform the same function, but scanner written in C uses another approach to detect the keyword, "trie", I've found this approach in the book "Crafting Interpreters".
 
 
+## *Parser - AST - Code Generator* 20/6/2025 - ...
+    for instance we have an expression 1 + 2 * -3
+    - after Scanning it we get:
+```plaintext
+        TOKEN_NUMBER "1"
+        TOKEN_PLUS "+"
+        TOKEN_NUMBER "2"
+        TOKEN_STAR "*"
+        TOKEN_MINUS "-"
+        TOKEN_NUMBER "3"
+```
+    - parser builds Abstract syntax tree:
+```plaintext
+            +
+           / \
+          1   *
+             / \
+            2   -
+                |
+                3
+```
+    - gode generator walks AST, post-order traversal (left->right->node)
+```plaintext
+        1. generate code for 1
+        2. generate code for 2
+        3. generate code for 3
+        4. generate code for -
+        5. generate code for *
+        6. generate code for +
+```
+    - resulting bytecode should look like this
+```plaintext
+    OP_CONSTANT 1
+    OP_CONSTANT 2
+    OP_CONSTANT 3
+    OP_NEG
+    OP_MUL
+    OP_ADD
+```
+
+
+
