@@ -1,4 +1,3 @@
-```markdown
 # **VIRTEL Interpreter**
 *(Functional Language Implementation)*
 
@@ -96,11 +95,19 @@ Token { token_type: Equal, lexeme: "=", line: 1 }
 Implemented **Pratt parsing** for expressions:
 ```plaintext
 > (-1 + 8) * 3.5 / 6 - -1
-Stack Trace:
-[0x641a47b4e3f8]: [-1.000000]
-[0x641a47b4e400]: [-1.000000, 8.000000]
-[0x641a47b4e3f8]: [7.000000]
-...
+Stack (top at 0x641a47b4e3f0):
+Stack (top at 0x641a47b4e3f8): [ 1.000000 ]
+Stack (top at 0x641a47b4e3f8): [ -1.000000 ]
+Stack (top at 0x641a47b4e400): [ -1.000000 ] [ 8.000000 ]
+Stack (top at 0x641a47b4e3f8): [ 7.000000 ]
+Stack (top at 0x641a47b4e400): [ 7.000000 ] [ 3.500000 ]
+Stack (top at 0x641a47b4e3f8): [ 24.500000 ]
+Stack (top at 0x641a47b4e400): [ 24.500000 ] [ 6.000000 ]
+Stack (top at 0x641a47b4e3f8): [ 4.083333 ]
+Stack (top at 0x641a47b4e400): [ 4.083333 ] [ 1.000000 ]
+Stack (top at 0x641a47b4e400): [ 4.083333 ] [ -1.000000 ]
+Stack (top at 0x641a47b4e3f8): [ 5.083333 ]
+
 Final Result: [5.083333]
 ```
 ```
