@@ -35,12 +35,21 @@ double pop() {
 }
 
 InterpretResult interpret(const char * source) {
-    compile(source);
-    return OK;
+    Chunk *chunk = constructChunk();
 
-    //vm.chunk = chunk;
-    //vm.ip = vm.chunk->opcodes;
-    //return run();
+    if (!compile(source, chunk)) {
+        deconstructChunk(chunk);
+        return COM_ERR;
+    }
+
+    vm.chunk = chunk;
+    vm.ip = vm.chunk->opcodes;
+
+    InterpretResult result = run();
+
+    deconstructChunk(chunk);
+
+    return result;
 }
 
 InterpretResult run() {
