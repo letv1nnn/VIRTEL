@@ -2,7 +2,8 @@
 #define COMPILER_H
 
 #include "scanner.h"
+#include "chunk.h"
 
-void compile(const char *source);
+bool compile(const char *source, Chunk *chunk);
 
 #endif

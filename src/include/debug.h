@@ -6,5 +6,6 @@
 
 void decodeChunk(Chunk *chunk);
 void vmStack(VM *vm);
+void testScanner(const char *source);
 
 #endif
