@@ -92,6 +92,7 @@ Token { token_type: Equal, lexeme: "=", line: 1 }
 ---
 
 ### **Parser** *(20/06/2025 - 22/06/2025)*
+This is the point where I've created a calculater that is ultra overcomplicated under the hood.
 Implemented **Pratt parsing** for expressions:
 ```plaintext
 > (-1 + 8) * 3.5 / 6 - -1
